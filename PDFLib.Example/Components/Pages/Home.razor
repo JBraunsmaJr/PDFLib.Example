@@ -1,0 +1,38 @@
+﻿@page "/"
+@rendermode InteractiveServer
+@inject HttpClient Client
+@inject IJSRuntime Runtime
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, world!</h1>
+
+<button class="btn btn-primary" @onclick="@(async ()=> await DownloadReport())">
+    Get Report
+</button>
+
+<button class="btn btn-secondary" @onclick="@(async ()=> await DownloadPage())">
+    Print Page
+</button>
+
+<p>
+    Welcome to your new app.
+</p>
+
+@code {
+
+    private async Task DownloadPage()
+    {
+        var response = await Client.GetStreamAsync("/print");
+        using var streamRef = new DotNetStreamReference(stream: response);
+        await Runtime.InvokeVoidAsync("downloadFileFromStream", "page.pdf", streamRef);
+    }
+    
+    private async Task DownloadReport()
+    {
+        var response = await Client.GetStreamAsync("/signature");
+        using var streamRef = new DotNetStreamReference(stream: response);
+
+        await Runtime.InvokeVoidAsync("downloadFileFromStream", "report.pdf", streamRef);
+    }
+}

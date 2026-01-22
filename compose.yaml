@@ -1,0 +1,10 @@
+﻿services:
+  pdflib.example:
+    image: pdflib.example
+    build:
+      context: .
+      dockerfile: PDFLib.Example/Dockerfile
+    ports:
+      - "8080:8080"
+    # environment:
+      # - HttpClient__BaseAddress=Insert your base address here (http://localhost:5130)
