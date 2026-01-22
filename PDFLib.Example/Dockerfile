@@ -31,4 +31,4 @@ RUN dotnet publish "./PDFLib.Example.csproj" -c $BUILD_CONFIGURATION -o /app/pub
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "PDFLib.Example.dll"]
+ENTRYPOINT ["./PDFLib.Example"]
