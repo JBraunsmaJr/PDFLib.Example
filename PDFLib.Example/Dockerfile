@@ -26,10 +26,9 @@ RUN dotnet build "./PDFLib.Example.csproj" -c $BUILD_CONFIGURATION -o /app/build
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
 
-# Notice the target for linux!
 RUN dotnet publish "./PDFLib.Example.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=true
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["./PDFLib.Example"]
+ENTRYPOINT ["dotnet", "PDFLib.Example.dll"]
