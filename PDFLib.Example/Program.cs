@@ -5,6 +5,7 @@ using PDFLib.Chromium;
 using PDFLib.Chromium.Hosting;
 using PDFLib.Example;
 using PDFLib.Example.Components;
+using PDFLib.Example.Components.Layout;
 using PDFLib.Example.Components.Pages;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,6 +30,14 @@ if (!app.Environment.IsDevelopment())
 
 app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
 app.UseHttpsRedirection();
+
+app.MapGet("/print-weather",
+    async (HttpContext context, [FromServices] PdfService pdfService, [FromServices] BlazorRenderer renderer) =>
+    {
+        // We can write directly to the response body
+        var html = await renderer.RenderWrappedComponent<Weather>();
+        await pdfService.RenderPdfAsync(html, context.Response.Body);
+    });
 
 app.MapGet("/print", async (HttpContext context,[FromServices] PdfService pdfService, [FromServices] BlazorRenderer renderer) =>
 {

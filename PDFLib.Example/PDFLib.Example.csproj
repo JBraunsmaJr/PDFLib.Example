@@ -18,6 +18,7 @@
     <ItemGroup>
       <PackageReference Include="Badger.PDFLib.Chromium" Version="1.0.8" GeneratePathProperty="true" />
       <PackageReference Include="Badger.PDFLib.Chromium.Hosting" Version="1.0.8" />
+      <PackageReference Include="HtmlAgilityPack" Version="1.12.4" />
     </ItemGroup>
 
     <ItemGroup>
